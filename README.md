@@ -215,6 +215,14 @@ Built by Vlooper
 
 ---
 
+## Say Thanks
+
+If this tool saved you hours of work, drop me a line — I'd love to hear about it!
+
+📧 **vlooper418@gmail.com**
+
+---
+
 ## License
 
 MIT License — use it, modify it, share it.
