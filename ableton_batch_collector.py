@@ -361,6 +361,12 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .toggle input:checked~.toggle-thumb{transform:translateX(18px)}
 .toggle-label{font-size:13px;color:var(--txt2);cursor:pointer;user-select:none}
 .dry-badge{display:inline-flex;background:var(--ylwbg);color:var(--ylw);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:6px}
+.dry-banner{display:none;background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:2px dashed var(--ylw);border-radius:var(--rad);padding:16px 20px;margin-bottom:14px;text-align:center;animation:pulse-border 2s ease infinite}
+.dry-banner.active{display:block}
+.dry-banner-icon{font-size:28px;margin-bottom:4px}
+.dry-banner-title{font-size:15px;font-weight:700;color:#e65100}
+.dry-banner-sub{font-size:12px;color:#bf360c;margin-top:2px}
+@keyframes pulse-border{0%,100%{border-color:var(--ylw);box-shadow:0 0 0 0 rgba(245,166,35,0.2)}50%{border-color:#e65100;box-shadow:0 0 16px 4px rgba(245,166,35,0.15)}}
 
 .btn-row{display:flex;gap:8px;margin-bottom:16px}
 .btn{padding:12px 24px;border-radius:var(--rads);font:700 13px 'DM Sans',sans-serif;border:none;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:6px}
@@ -429,6 +435,12 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 <span class="toggle-label" onclick="document.getElementById('dryToggle').click()">Dry run <span class="dry-badge" id="dryBadge">👀 PREVIEW</span></span>
 </div>
 
+<div class="dry-banner active" id="dryBanner">
+<div class="dry-banner-icon">🚧</div>
+<div class="dry-banner-title">DRY RUN MODE — No files will be modified</div>
+<div class="dry-banner-sub">Turn off the toggle above to collect for real</div>
+</div>
+
 <div class="btn-row">
 <button class="btn btn-secondary" id="scanBtn" onclick="doScan()">🔍 Scan</button>
 <button class="btn btn-primary" id="collectBtn" onclick="doCollect()">✨ Collect All</button>
@@ -479,7 +491,11 @@ async function browseFolder(){
     btn.classList.remove('loading');btn.textContent='📂 Browse...';
 }
 
-function toggleDry(){document.getElementById('dryBadge').style.display=document.getElementById('dryToggle').checked?'':'none'}
+function toggleDry(){
+    const on=document.getElementById('dryToggle').checked;
+    document.getElementById('dryBadge').style.display=on?'':'none';
+    document.getElementById('dryBanner').classList.toggle('active',on);
+}
 function setRunning(r){
     document.getElementById('scanBtn').disabled=r;
     document.getElementById('collectBtn').disabled=r;
