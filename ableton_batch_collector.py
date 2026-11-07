@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📦 Ableton Batch Collector
+📦 Ableton Batch - Collect All and Save
 ============================
 Batch "Collect All and Save" for Ableton Live projects.
 Opens in your browser — zero dependencies!
@@ -318,7 +318,7 @@ HTML = r"""<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ableton Batch Collector</title>
+<title>Ableton Batch - Collect All and Save</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -412,7 +412,7 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 <div class="app">
 <div class="header">
 <div class="logo">📦</div>
-<h1>Ableton Batch Collector</h1>
+<h1>Ableton Batch - Collect All and Save</h1>
 <p>Collect all your samples in one click. No broken links, ever.</p>
 </div>
 
@@ -574,7 +574,7 @@ def main():
     server = HTTPServer(('127.0.0.1', PORT), Handler)
     url = f'http://127.0.0.1:{PORT}'
     print(f"""
-    📦 Ableton Batch Collector v{APP_VERSION}
+    📦 Ableton Batch - Collect All and Save v{APP_VERSION}
     ─────────────────────────────────
     Running at: {url}
 

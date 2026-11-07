@@ -1,6 +1,6 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────
-# 📦 Build Ableton Batch Collector as macOS .app + .dmg
+# 📦 Build Ableton Batch - Collect All and Save as macOS .app + .dmg
 # ─────────────────────────────────────────────────────
 # No dependencies needed — uses system tools only.
 #
@@ -8,12 +8,12 @@
 #   bash build_dmg.sh
 #
 # Output:
-#   dist/Ableton Batch Collector.dmg
+#   dist/Ableton Batch - Collect All and Save.dmg
 # ─────────────────────────────────────────────────────
 
 set -e
 
-APP_NAME="Ableton Batch Collector"
+APP_NAME="Ableton Batch - Collect All and Save"
 BUNDLE_ID="com.vlooper.ableton-batch-collector"
 VERSION="1.2.0"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"

@@ -1,4 +1,4 @@
-# 📦 Ableton Batch Collector
+# 📦 Ableton Batch - Collect All and Save
 
 **Batch "Collect All and Save" for Ableton Live — without opening Ableton.**
 
@@ -37,7 +37,7 @@ Forum posts going back over a decade show producers struggling with this exact p
 
 ## The Solution
 
-Ableton Batch Collector parses your .als files directly (they're gzipped XML), finds all external sample references, copies the files into each project's `Samples/Collected` folder, and updates the references — exactly like Ableton's built-in feature, but for **every project in a folder at once**.
+Ableton Batch - Collect All and Save parses your .als files directly (they're gzipped XML), finds all external sample references, copies the files into each project's `Samples/Collected` folder, and updates the references — exactly like Ableton's built-in feature, but for **every project in a folder at once**.
 
 No dependencies. No Ableton required. Just run it.
 
@@ -61,7 +61,7 @@ No dependencies. No Ableton required. Just run it.
 
 ### Option A: Download the .dmg (recommended)
 
-1. Download `Ableton Batch Collector.dmg` from [Releases](../../releases)
+1. Download `Ableton Batch - Collect All and Save.dmg` from [Releases](../../releases)
 2. Open the DMG and drag the app to your Applications folder
 3. **First launch:** Right-click (two-finger tap) the app → click **Open**
    - macOS will warn about an unverified developer — click **Open** to proceed
@@ -69,7 +69,7 @@ No dependencies. No Ableton required. Just run it.
 
 > **Tip:** If macOS still blocks the app, open Terminal and run:
 > ```bash
-> xattr -cr "/Applications/Ableton Batch Collector.app"
+> xattr -cr "/Applications/Ableton Batch - Collect All and Save.app"
 > ```
 
 ### Option B: Run the Python script directly
@@ -130,8 +130,8 @@ bash build_dmg.sh
 ```
 
 This creates:
-- `dist/Ableton Batch Collector.app` — The macOS application
-- `dist/Ableton Batch Collector.dmg` — Distributable disk image with drag-to-Applications
+- `dist/Ableton Batch - Collect All and Save.app` — The macOS application
+- `dist/Ableton Batch - Collect All and Save.dmg` — Distributable disk image with drag-to-Applications
 
 No Xcode, no developer tools required — uses only built-in macOS utilities.
 
