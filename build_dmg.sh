@@ -114,6 +114,19 @@ mkdir -p "$DMG_TEMP"
 cp -R "$APP_DIR" "$DMG_TEMP/"
 ln -s /Applications "$DMG_TEMP/Applications"
 
+# Add a readme/contact file
+cat > "$DMG_TEMP/Say Thanks.txt" << THANKS
+Ableton Batch - Collect All and Save
+====================================
+
+If this tool saved you hours of work, drop me a line!
+
+Email: vlooper418@gmail.com
+GitHub: github.com/vlooper/ableton-batch-collector
+
+— Vlooper
+THANKS
+
 # Create DMG
 rm -f "$DIST_DIR/$DMG_NAME"
 hdiutil create \
