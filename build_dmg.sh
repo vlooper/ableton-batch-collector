@@ -79,116 +79,23 @@ cat > "$APP_DIR/Contents/Info.plist" << PLIST
 PLIST
 
 # ── Create app icon ──
-echo "  [4/5] Generating app icon..."
+echo "  [4/5] Converting app icon..."
 
-# Create a simple icon using Python (renders an emoji-style icon)
-python3 - << 'ICONSCRIPT'
-import struct, zlib, os, sys
-
-# We'll create a simple 256x256 PNG icon
-# Box emoji style: orange rounded square with white package lines
-SIZE = 256
-pixels = []
-
-for y in range(SIZE):
-    row = []
-    for x in range(SIZE):
-        # Normalized coords
-        nx = x / SIZE
-        ny = y / SIZE
-        
-        # Rounded rectangle check
-        cx, cy = abs(nx - 0.5), abs(ny - 0.5)
-        in_rect = cx < 0.38 and cy < 0.38
-        
-        # Round corners
-        corner_r = 0.1
-        if cx > 0.38 - corner_r and cy > 0.38 - corner_r:
-            dx = cx - (0.38 - corner_r)
-            dy = cy - (0.38 - corner_r)
-            in_rect = (dx*dx + dy*dy) < corner_r * corner_r
-        
-        if in_rect:
-            # Orange gradient background
-            r = int(255 - ny * 30)
-            g = int(107 - ny * 20)
-            b = int(74 - ny * 15)
-            
-            # White cross/package lines
-            is_line = False
-            # Horizontal middle line
-            if abs(ny - 0.5) < 0.008:
-                is_line = True
-            # Vertical middle line
-            if abs(nx - 0.5) < 0.008:
-                is_line = True
-            # Top flap lines
-            if ny < 0.5 and ny > 0.35:
-                # Left flap
-                slope_l = (ny - 0.35) / (nx - 0.25 + 0.001)
-                if abs(slope_l - 0.6) < 0.08 and nx < 0.5:
-                    is_line = True
-                # Right flap
-                slope_r = (ny - 0.35) / (0.75 - nx + 0.001)
-                if abs(slope_r - 0.6) < 0.08 and nx > 0.5:
-                    is_line = True
-            
-            if is_line:
-                r, g, b = 255, 255, 255
-            
-            row.extend([r, g, b, 255])
-        else:
-            row.extend([0, 0, 0, 0])
-    pixels.append(bytes(row))
-
-# Write PNG
-def write_png(filename, width, height, rows):
-    def chunk(ctype, data):
-        c = ctype + data
-        return struct.pack('>I', len(data)) + c + struct.pack('>I', zlib.crc32(c) & 0xffffffff)
-    
-    raw = b''
-    for row in rows:
-        raw += b'\x00' + row
-    
-    with open(filename, 'wb') as f:
-        f.write(b'\x89PNG\r\n\x1a\n')
-        f.write(chunk(b'IHDR', struct.pack('>IIBBBBB', width, height, 8, 6, 0, 0, 0)))
-        f.write(chunk(b'IDAT', zlib.compress(raw)))
-        f.write(chunk(b'IEND', b''))
-
-dist = os.path.dirname(os.path.abspath(__file__)) if '__file__' in dir() else '.'
-icon_dir = sys.argv[1] if len(sys.argv) > 1 else 'dist'
-os.makedirs(f'{icon_dir}/icon.iconset', exist_ok=True)
-
-for size in [16, 32, 64, 128, 256]:
-    # Simple resize by nearest neighbor
-    resized = []
-    for y in range(size):
-        row = bytearray()
-        sy = int(y * SIZE / size)
-        for x in range(size):
-            sx = int(x * SIZE / size)
-            offset = sx * 4
-            row.extend(pixels[sy][offset:offset+4])
-        resized.append(bytes(row))
-    
-    write_png(f'{icon_dir}/icon.iconset/icon_{size}x{size}.png', size, size, resized)
-    if size <= 128:
-        s2 = size * 2
-        resized2 = []
-        for y in range(s2):
-            row = bytearray()
-            sy = int(y * SIZE / s2)
-            for x in range(s2):
-                sx = int(x * SIZE / s2)
-                offset = sx * 4
-                row.extend(pixels[sy][offset:offset+4])
-            resized2.append(bytes(row))
-        write_png(f'{icon_dir}/icon.iconset/icon_{size}x{size}@2x.png', s2, s2, resized2)
-
-print("  Icon PNGs generated.")
-ICONSCRIPT
+# Use the app_icon.png from the repo
+if [ -f "$SCRIPT_DIR/app_icon.png" ]; then
+    mkdir -p "$DIST_DIR/icon.iconset"
+    # Use sips to resize for each icon size
+    for size in 16 32 64 128 256 512; do
+        sips -z $size $size "$SCRIPT_DIR/app_icon.png" --out "$DIST_DIR/icon.iconset/icon_${size}x${size}.png" > /dev/null 2>&1
+    done
+    for size in 16 32 64 128 256; do
+        s2=$((size * 2))
+        sips -z $s2 $s2 "$SCRIPT_DIR/app_icon.png" --out "$DIST_DIR/icon.iconset/icon_${size}x${size}@2x.png" > /dev/null 2>&1
+    done
+    echo "  Icon PNGs generated from app_icon.png"
+else
+    echo "  Warning: app_icon.png not found, using default"
+fi
 
 # Convert iconset to icns
 if [ -d "$DIST_DIR/icon.iconset" ]; then
