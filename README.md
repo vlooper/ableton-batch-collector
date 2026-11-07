@@ -203,7 +203,7 @@ Zero dependencies. Python's `http.server` is built-in, so the app needs nothing 
 
 ## Credits
 
-Built by [Vlooper Creative AI](https://vlooper.com) — Montreal-based music production & creative technology studio.
+Built by Vlooper
 
 ---
 

@@ -457,7 +457,7 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 
 <div class="log-header">📋 Activity log</div>
 <div class="log-box" id="logBox"></div>
-<div class="footer">v""" + APP_VERSION + r""" · made with ❤️ by Vlooper Creative AI</div>
+<div class="footer">v""" + APP_VERSION + r""" · made with ❤️ by Vlooper</div>
 </div>
 
 <script>
