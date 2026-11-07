@@ -12,6 +12,14 @@ Collect all external samples across hundreds of projects in one click. No more o
 
 ---
 
+## Demo
+
+https://github.com/user-attachments/assets/476a8e63-bd1f-47a6-bfcc-759925c84aed
+
+> 🎬 30-second overview of what the app does
+
+---
+
 ## The Problem
 
 Every Ableton producer knows this pain:
