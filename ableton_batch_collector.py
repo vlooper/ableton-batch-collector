@@ -586,8 +586,24 @@ class Handler(BaseHTTPRequestHandler):
         else:
             self.send_response(404); self.end_headers()
 
+class ReusableHTTPServer(HTTPServer):
+    allow_reuse_address = True
+    allow_reuse_port = True
+
+def kill_existing():
+    import subprocess
+    try:
+        result = subprocess.run(['lsof', '-ti', f':{PORT}'], capture_output=True, text=True)
+        if result.stdout.strip():
+            for pid in result.stdout.strip().split(chr(10)):
+                try: os.kill(int(pid), 9)
+                except: pass
+            import time; time.sleep(0.3)
+    except: pass
+
 def main():
-    server = HTTPServer(('127.0.0.1', PORT), Handler)
+    kill_existing()
+    server = ReusableHTTPServer(('127.0.0.1', PORT), Handler)
     url = f'http://127.0.0.1:{PORT}'
     print(f"""
     📦 Ableton Batch - Collect All and Save v{APP_VERSION}
